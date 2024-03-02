@@ -1,7 +1,6 @@
 package com.ristek.ristektugasbe.controller;
 
 import com.ristek.ristektugasbe.dto.KelompokOkkDTO;
-import com.ristek.ristektugasbe.dto.MentorDTO;
 import com.ristek.ristektugasbe.dto.MentoringSessionDTO;
 import com.ristek.ristektugasbe.model.KelompokOkk;
 import com.ristek.ristektugasbe.model.Mentee;
@@ -9,16 +8,15 @@ import com.ristek.ristektugasbe.model.Mentor;
 import com.ristek.ristektugasbe.model.MentoringSession;
 import com.ristek.ristektugasbe.service.KelompokOkkService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/kelompok-okk")
+@CrossOrigin(originPatterns = "*")
 public class KelompokOkkController {
 
     private final KelompokOkkService kelompokOKKService;
