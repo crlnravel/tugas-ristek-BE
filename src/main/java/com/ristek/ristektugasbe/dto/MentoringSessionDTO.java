@@ -22,7 +22,5 @@ public class MentoringSessionDTO {
 
     private Long kelompokOkkId;
 
-    private MentorDTO mentor;
-
     private List<Long> menteeIds;
 }

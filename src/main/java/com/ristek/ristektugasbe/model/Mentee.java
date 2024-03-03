@@ -28,7 +28,12 @@ public class Mentee {
     @JoinColumn(name = "kelompok_okk_id", nullable = false)
     private KelompokOkk kelompokOkk;
 
-    @ManyToMany(mappedBy = "mentees")
+    @ManyToMany
+    @JoinTable(
+            name = "mentee_mentoring",
+            joinColumns = { @JoinColumn(name = "mentee_id") },
+            inverseJoinColumns = { @JoinColumn(name = "mentoring_session_id") }
+    )
     private List<MentoringSession> mentoringSessions;
 
 }

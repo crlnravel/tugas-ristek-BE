@@ -31,11 +31,6 @@ public class MentoringSession {
     @JoinColumn(name = "kelompok_okk_id", nullable = false)
     private KelompokOkk kelompokOkk;
 
-    @ManyToMany
-    @JoinTable(
-            name = "mentoring_mentee",
-            joinColumns = { @JoinColumn(name = "mentoring_session_id") },
-            inverseJoinColumns = { @JoinColumn(name = "mentee_id") }
-    )
+    @ManyToMany(mappedBy = "mentoringSessions", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Mentee> mentees;
 }

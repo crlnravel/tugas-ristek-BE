@@ -12,6 +12,7 @@ import com.ristek.ristektugasbe.service.KelompokOkkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,19 +47,16 @@ public class KelompokOkkServiceImpl implements KelompokOkkService {
 
     @Override
     public KelompokOkk saveKelompokOkk(KelompokOkk kelompokOkk) {
+        if (kelompokOkk.getMentoringSessions() == null) {
+            kelompokOkk.setMentoringSessions(new ArrayList<MentoringSession>());
+
+        }
+
         return kelompokOkkRepository.save(kelompokOkk);
     }
 
     @Override
     public KelompokOkk updateKelompokOkk(KelompokOkk kelompokOkk) {
-        Mentor mentor = kelompokOkk.getMentor();
-        mentor.setKelompokOkk(kelompokOkk);
-        mentorRepository.save(mentor);
-
-        List<Mentee> mentees = kelompokOkk.getMentees();
-        mentees.forEach(mentee -> mentee.setKelompokOkk(kelompokOkk));
-        menteeRepository.saveAll(mentees);
-
         return kelompokOkkRepository.save(kelompokOkk);
     }
 
@@ -75,7 +73,6 @@ public class KelompokOkkServiceImpl implements KelompokOkkService {
         mentees.add(mentee);
 
         mentee.setKelompokOkk(kelompokOkk);
-        menteeRepository.save(mentee);
 
         kelompokOkk.setMentees(mentees);
 
