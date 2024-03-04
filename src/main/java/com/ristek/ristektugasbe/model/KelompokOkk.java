@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -24,9 +23,9 @@ public class KelompokOkk {
     @OneToOne(mappedBy = "kelompokOkk", cascade = CascadeType.ALL)
     private Mentor mentor;
 
-    @OneToMany(mappedBy = "kelompokOkk", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "kelompokOkk")
     private List<Mentee> mentees;
 
-    @OneToMany(mappedBy = "kelompokOkk", cascade = CascadeType.ALL)
-    private List<MentoringSession> mentoringSessions;
+    @OneToMany(mappedBy = "kelompokOkk")
+    private List<Mentoring> mentorings;
 }

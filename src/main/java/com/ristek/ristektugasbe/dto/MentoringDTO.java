@@ -1,16 +1,13 @@
 package com.ristek.ristektugasbe.dto;
 
-import com.ristek.ristektugasbe.model.KelompokOkk;
-import com.ristek.ristektugasbe.model.Mentee;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 @Data
-public class MentoringSessionDTO {
+public class MentoringDTO {
     private Long id;
 
     @Column(name = "waktu")

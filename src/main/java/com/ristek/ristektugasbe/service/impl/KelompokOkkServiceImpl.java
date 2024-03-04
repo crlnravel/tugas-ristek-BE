@@ -3,18 +3,15 @@ package com.ristek.ristektugasbe.service.impl;
 import com.ristek.ristektugasbe.model.KelompokOkk;
 import com.ristek.ristektugasbe.model.Mentee;
 import com.ristek.ristektugasbe.model.Mentor;
-import com.ristek.ristektugasbe.model.MentoringSession;
+import com.ristek.ristektugasbe.model.Mentoring;
 import com.ristek.ristektugasbe.repository.KelompokOkkRepository;
 import com.ristek.ristektugasbe.repository.MenteeRepository;
 import com.ristek.ristektugasbe.repository.MentorRepository;
-import com.ristek.ristektugasbe.repository.MentoringSessionRepository;
+import com.ristek.ristektugasbe.repository.MentoringRepository;
 import com.ristek.ristektugasbe.service.KelompokOkkService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class KelompokOkkServiceImpl implements KelompokOkkService {
@@ -25,15 +22,14 @@ public class KelompokOkkServiceImpl implements KelompokOkkService {
 
     private final MentorRepository mentorRepository;
 
-    private final MentoringSessionRepository mentoringSessionRepository;
+    private final MentoringRepository mentoringRepository;
 
-    public KelompokOkkServiceImpl(KelompokOkkRepository kelompokOkkRepository, MenteeRepository menteeRepository, MentorRepository mentorRepository, MentoringSessionRepository mentoringSessionRepository) {
+    public KelompokOkkServiceImpl(KelompokOkkRepository kelompokOkkRepository, MenteeRepository menteeRepository, MentorRepository mentorRepository, MentoringRepository mentoringRepository) {
         this.kelompokOkkRepository = kelompokOkkRepository;
         this.menteeRepository = menteeRepository;
         this.mentorRepository = mentorRepository;
-        this.mentoringSessionRepository = mentoringSessionRepository;
+        this.mentoringRepository = mentoringRepository;
     }
-
 
     @Override
     public List<KelompokOkk> findAllKelompokOkk() {
@@ -47,16 +43,6 @@ public class KelompokOkkServiceImpl implements KelompokOkkService {
 
     @Override
     public KelompokOkk saveKelompokOkk(KelompokOkk kelompokOkk) {
-        if (kelompokOkk.getMentoringSessions() == null) {
-            kelompokOkk.setMentoringSessions(new ArrayList<MentoringSession>());
-
-        }
-
-        return kelompokOkkRepository.save(kelompokOkk);
-    }
-
-    @Override
-    public KelompokOkk updateKelompokOkk(KelompokOkk kelompokOkk) {
         return kelompokOkkRepository.save(kelompokOkk);
     }
 
@@ -66,47 +52,74 @@ public class KelompokOkkServiceImpl implements KelompokOkkService {
     }
 
     @Override
-    public KelompokOkk addMentee(Long id, Mentee mentee) {
+    public List<Mentoring> findAllMentoring(Long id) {
         KelompokOkk kelompokOkk = kelompokOkkRepository.findById(id).orElse(null);
 
-        List<Mentee> mentees = kelompokOkk.getMentees();
-        mentees.add(mentee);
+        if (kelompokOkk == null) {
+            return null;
+        }
 
-        mentee.setKelompokOkk(kelompokOkk);
-
-        kelompokOkk.setMentees(mentees);
-
-        return kelompokOkkRepository.save(kelompokOkk);
+        return kelompokOkk.getMentorings();
     }
 
     @Override
-    public Mentee findMenteeDetailById(Long id) {
-        return menteeRepository.findById(id).orElse(null);
+    public Mentoring findMentoringById(Long id, Long mentoringId) {
+        KelompokOkk kelompokOkk = kelompokOkkRepository.findById(id).orElse(null);
+
+        if (kelompokOkk == null) {
+            return null;
+        }
+
+        Mentoring mentoring = mentoringRepository.findById(id).orElse(null);
+
+        if (mentoring == null) {
+            return null;
+        }
+
+        if (mentoring.getKelompokOkk() != kelompokOkk) {
+            return null;
+        }
+
+        return mentoring;
     }
 
     @Override
-    public KelompokOkk addMentoringSession(Long id, MentoringSession mentoringSession) {
-        KelompokOkk kelompokOkk = kelompokOkkRepository.findById(id).orElse(null);
-
-        mentoringSession.setKelompokOkk(kelompokOkk);
-
-        List<MentoringSession> mentoringSessions = kelompokOkk.getMentoringSessions();
-        mentoringSessions.add(mentoringSession);
-        kelompokOkk.setMentoringSessions(mentoringSessions);
-
-        return kelompokOkkRepository.save(kelompokOkk);
+    public Mentoring saveMentoring(Long id, Mentoring mentoring) {
+        return null;
     }
 
     @Override
-    public KelompokOkk updateMentoringSession(Long id, MentoringSession mentoringSession) {
-        KelompokOkk kelompokOkk = kelompokOkkRepository.findById(id).orElse(null);
+    public void deleteMentoringById(Long id, Long mentoringId) {
 
-        mentoringSession.setKelompokOkk(kelompokOkk);
+    }
 
-        List<MentoringSession> mentoringSessions = kelompokOkk.getMentoringSessions();
-        mentoringSessions.add(mentoringSession);
-        kelompokOkk.setMentoringSessions(mentoringSessions);
+    @Override
+    public Mentor findMentor(Long id) {
+        return null;
+    }
 
-        return kelompokOkkRepository.save(kelompokOkk);
+    @Override
+    public Mentor updateMentor(Long id, Mentoring mentoring) {
+        return null;
+    }
+
+    @Override
+    public List<Mentee> findAllMentee(Long id) {
+        return null;
+    }
+
+    @Override
+    public Mentee findMenteeById(Long id, Long menteeId) {
+        return null;
+    }
+
+    @Override
+    public Mentee saveMentee(Long id, Mentee mentee) {
+        return null;
+    }
+
+    @Override
+    public void deleteMenteeById(Long id, Long menteeId) {
+
     }
 }

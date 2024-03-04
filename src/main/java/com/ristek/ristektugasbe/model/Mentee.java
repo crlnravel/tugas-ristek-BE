@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -24,9 +23,13 @@ public class Mentee {
     @Column(name = "jalur_masuk", nullable = false)
     private String jalurMasuk;
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToOne
     @JoinColumn(name = "kelompok_okk_id", nullable = false)
     private KelompokOkk kelompokOkk;
+
+    @ManyToOne
+    @JoinColumn(name = "mentor_id", nullable = false)
+    private Mentor mentor;
 
     @ManyToMany
     @JoinTable(
@@ -34,6 +37,6 @@ public class Mentee {
             joinColumns = { @JoinColumn(name = "mentee_id") },
             inverseJoinColumns = { @JoinColumn(name = "mentoring_session_id") }
     )
-    private List<MentoringSession> mentoringSessions;
+    private List<Mentoring> mentorings;
 
 }
