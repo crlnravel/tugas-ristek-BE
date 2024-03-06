@@ -1,4 +1,4 @@
-package com.ristek.ristektugasbe.model;
+package com.ristek.ristektugasbe.entity.kelompokokk;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,10 +26,6 @@ public class Mentee {
     @ManyToOne
     @JoinColumn(name = "kelompok_okk_id", nullable = false)
     private KelompokOkk kelompokOkk;
-
-    @ManyToOne
-    @JoinColumn(name = "mentor_id", nullable = false)
-    private Mentor mentor;
 
     @ManyToMany
     @JoinTable(

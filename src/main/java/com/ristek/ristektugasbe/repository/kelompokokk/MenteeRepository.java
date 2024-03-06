@@ -1,6 +1,6 @@
-package com.ristek.ristektugasbe.repository;
+package com.ristek.ristektugasbe.repository.kelompokokk;
 
-import com.ristek.ristektugasbe.model.Mentee;
+import com.ristek.ristektugasbe.entity.kelompokokk.Mentee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

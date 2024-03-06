@@ -1,4 +1,4 @@
-package com.ristek.ristektugasbe.model;
+package com.ristek.ristektugasbe.entity.kelompokokk;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,5 +27,5 @@ public class KelompokOkk {
     private List<Mentee> mentees;
 
     @OneToMany(mappedBy = "kelompokOkk")
-    private List<Mentoring> mentorings;
+    private List<Mentoring> mentoringList;
 }

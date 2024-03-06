@@ -1,23 +1,17 @@
-package com.ristek.ristektugasbe.dto;
+package com.ristek.ristektugasbe.dto.kelompokokkresponse;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 @Data
-public class MentoringDTO {
+public class MentoringDTORes {
     private Long id;
-
-    @Column(name = "waktu")
     private Timestamp waktu;
-
     private String tempat;
-
     private String materi;
-
     private Long kelompokOkkId;
-
-    private List<Long> menteeIds;
+    private MentorDTORes mentor;
+    private List<MenteeDTORes> menteeHadir;
 }

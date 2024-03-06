@@ -1,9 +1,7 @@
-package com.ristek.ristektugasbe.model;
+package com.ristek.ristektugasbe.entity.kelompokokk;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -32,7 +30,4 @@ public class Mentor {
     @OneToOne
     @JoinColumn(name = "kelompok_id", referencedColumnName = "id", nullable = false)
     private KelompokOkk kelompokOkk;
-
-    @OneToMany(mappedBy = "mentor")
-    private List<Mentee> mentees;
 }

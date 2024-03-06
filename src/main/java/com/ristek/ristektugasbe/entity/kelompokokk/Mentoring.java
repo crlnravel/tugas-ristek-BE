@@ -1,4 +1,4 @@
-package com.ristek.ristektugasbe.model;
+package com.ristek.ristektugasbe.entity.kelompokokk;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,6 +30,6 @@ public class Mentoring {
     @JoinColumn(name = "kelompok_okk_id", nullable = false)
     private KelompokOkk kelompokOkk;
 
-    @ManyToMany(mappedBy = "mentoringSessions", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(mappedBy = "mentorings")
     private List<Mentee> mentees;
 }

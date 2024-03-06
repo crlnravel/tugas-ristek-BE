@@ -1,0 +1,23 @@
+INSERT INTO bph (nama) VALUES ('Project');
+INSERT INTO bph (nama) VALUES ('Sponsorship');
+INSERT INTO bph (nama) VALUES ('Kesekretariatan');
+INSERT INTO bph (nama) VALUES ('PSDM');
+INSERT INTO bph (nama) VALUES ('Acara Puncak');
+INSERT INTO bph (nama) VALUES ('Eksplorasi');
+INSERT INTO bph (nama) VALUES ('Transportasi dan Konsumsi');
+INSERT INTO bph (nama) VALUES ('Perizinan');
+INSERT INTO bph (nama) VALUES ('Logistik');
+INSERT INTO bph (nama) VALUES ('Keamanan');
+INSERT INTO bph (nama) VALUES ('Medis');
+INSERT INTO bph (nama) VALUES ('Media Informasi');
+INSERT INTO bph (nama) VALUES ('Kelembagaan');
+INSERT INTO bph (nama) VALUES ('Materi');
+INSERT INTO bph (nama) VALUES ('Mentor');
+INSERT INTO bph (nama) VALUES ('Media Partner');
+INSERT INTO bph (nama) VALUES ('IT dan Broadcast');
+INSERT INTO bph (nama) VALUES ('Dekorasi dan Wardrobe');
+INSERT INTO bph (nama) VALUES ('Visual Design dan Dokumentasi');
+
+INSERT INTO paket_sponsor (tipe) VALUES ('Platinum');
+INSERT INTO paket_sponsor (tipe) VALUES ('Gold');
+INSERT INTO paket_sponsor (tipe) VALUES ('Silver');
