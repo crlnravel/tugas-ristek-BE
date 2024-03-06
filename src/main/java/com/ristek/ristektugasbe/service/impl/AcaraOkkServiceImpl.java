@@ -105,16 +105,6 @@ public class AcaraOkkServiceImpl implements AcaraOkkService {
     }
 
     @Override
-    public List<Contract> findContractByAcaraOkk(AcaraOkk acaraOkk) {
-        return acaraOkk.getContracts();
-    }
-
-    @Override
-    public List<Contract> findContractBySponsor(Sponsor sponsor) {
-        return sponsor.getContracts();
-    }
-
-    @Override
     public Contract saveContract(AcaraOkk acaraOkk, Sponsor sponsor, Contract contract) {
         contract.setAcaraOkk(acaraOkk);
         contract.setSponsor(sponsor);
@@ -149,6 +139,11 @@ public class AcaraOkkServiceImpl implements AcaraOkkService {
     @Override
     public List<PaketSponsor> findAllPaketSponsor() {
         return paketSponsorRepository.findAll();
+    }
+
+    @Override
+    public PaketSponsor findPaketSponsorById(Long paketSponsorId) {
+        return paketSponsorRepository.findById(paketSponsorId).orElse(null);
     }
 
     @Override

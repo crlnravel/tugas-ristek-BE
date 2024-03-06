@@ -4,15 +4,9 @@ import com.ristek.ristektugasbe.dto.acaraokkrequest.AcaraOkkDTOReq;
 import com.ristek.ristektugasbe.dto.acaraokkrequest.ContractDTOReq;
 import com.ristek.ristektugasbe.dto.acaraokkrequest.PembicaraDTOReq;
 import com.ristek.ristektugasbe.dto.acaraokkrequest.SponsorDTOReq;
-import com.ristek.ristektugasbe.dto.acaraokkresponse.AcaraOkkDTORes;
-import com.ristek.ristektugasbe.dto.acaraokkresponse.ContractDTORes;
-import com.ristek.ristektugasbe.dto.acaraokkresponse.PembicaraDTORes;
-import com.ristek.ristektugasbe.dto.acaraokkresponse.SponsorDTORes;
+import com.ristek.ristektugasbe.dto.acaraokkresponse.*;
 import com.ristek.ristektugasbe.dto.dtomapper.AcaraOkkDTOMapper;
-import com.ristek.ristektugasbe.entity.acaraokk.AcaraOkk;
-import com.ristek.ristektugasbe.entity.acaraokk.Contract;
-import com.ristek.ristektugasbe.entity.acaraokk.Pembicara;
-import com.ristek.ristektugasbe.entity.acaraokk.Sponsor;
+import com.ristek.ristektugasbe.entity.acaraokk.*;
 import com.ristek.ristektugasbe.service.AcaraOkkService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -100,6 +94,44 @@ public class AcaraOkkController {
 
         return new ResponseEntity<>(
                 acaraOkkDTOMapper.convertToDto(acaraOkkService.saveAcaraOkk(acaraOkk)),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("acara/{acaraId}/contract")
+    public ResponseEntity<List<ContractDTORes>> findContractByAcaraOkk(
+            @PathVariable("acaraId") Long acaraId
+    ) {
+        AcaraOkk acaraOkk = acaraOkkService.findAcaraOkkById(acaraId);
+
+        if (acaraOkk == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(
+                acaraOkk.getContracts()
+                        .stream()
+                        .map(acaraOkkDTOMapper::convertToDto)
+                        .toList(),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("acara/{acaraId}/pembicara")
+    public ResponseEntity<List<PembicaraDTORes>> findPembicaraByAcaraOkk(
+            @PathVariable("acaraId") Long acaraId
+    ) {
+        AcaraOkk acaraOkk = acaraOkkService.findAcaraOkkById(acaraId);
+
+        if (acaraOkk == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(
+                acaraOkk.getPembicaraList()
+                        .stream()
+                        .map(acaraOkkDTOMapper::convertToDto)
+                        .toList(),
                 HttpStatus.OK
         );
     }
@@ -192,6 +224,45 @@ public class AcaraOkkController {
         );
     }
 
+    @GetMapping("sponsor/paket-sponsor")
+    public ResponseEntity<List<PaketSponsorDTORes>> findAllPaketSponsor() {
+
+        List<PaketSponsorDTORes> paketSponsorDTOResList = acaraOkkService
+                .findAllPaketSponsor()
+                .stream()
+                .map(acaraOkkDTOMapper::convertToDto)
+                .toList();
+
+        return new ResponseEntity<>(paketSponsorDTOResList, HttpStatus.OK);
+    }
+
+    @PatchMapping("/sponsor/paket-sponsor/{paketSponsorId}")
+    public ResponseEntity<PaketSponsorDTORes> editPaketSponsor(
+            @PathVariable("paketSponsorId") Long paketSponsorId,
+            @RequestBody HashMap<String, String> body
+    ) {
+        PaketSponsor paketSponsor = acaraOkkService.findPaketSponsorById(paketSponsorId);
+
+        if (paketSponsor == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (body.get("harga") != null) {
+            try {
+                paketSponsor.setHarga(Double.parseDouble(body.get("harga")));
+            } catch (Exception ignored) {}
+        }
+
+        if (body.get("benefit") != null) {
+            paketSponsor.setBenefit(body.get("benefit"));
+        }
+
+        return new ResponseEntity<>(
+                acaraOkkDTOMapper.convertToDto(acaraOkkService.savePaketSponsor(paketSponsor)),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/sponsor/{sponsorId}")
     public ResponseEntity<SponsorDTORes> findSponsorById(
             @PathVariable("sponsorId") Long sponsorId
@@ -239,6 +310,25 @@ public class AcaraOkkController {
         return new ResponseEntity<>("Successfully Deleted!", HttpStatus.OK);
     }
 
+    @GetMapping("sponsor/{sponsorId}/contract")
+    public ResponseEntity<List<ContractDTORes>> findContractBySponsor(
+            @PathVariable("sponsorId") Long sponsorId
+    ) {
+        Sponsor sponsor = acaraOkkService.findSponsorById(sponsorId);
+
+        if (sponsor == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(
+                sponsor.getContracts()
+                        .stream()
+                        .map(acaraOkkDTOMapper::convertToDto)
+                        .toList(),
+                HttpStatus.OK
+        );
+    }
+
     /*
      * Controller for direct changes to contract
      * */
@@ -268,6 +358,33 @@ public class AcaraOkkController {
                 acaraOkkDTOMapper.convertToDto(acaraOkkService.saveContract(contract.getAcaraOkk(), contract.getSponsor(), contract)),
                 HttpStatus.CREATED
         );
+    }
+
+    @GetMapping("contract/{contractId}")
+    public ResponseEntity<ContractDTORes> findContractById(
+            @PathVariable("contractId") Long contractId
+    ) {
+        Contract contract = acaraOkkService.findContractById(contractId);
+
+        if (contract == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(acaraOkkDTOMapper.convertToDto(contract), HttpStatus.OK);
+    }
+
+    @DeleteMapping("contract/{contractId}")
+    public ResponseEntity<String> deleteContractById(
+            @PathVariable("contractId") Long contractId
+    ) {
+
+        if (acaraOkkService.findContractById(contractId)== null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        acaraOkkService.deleteContractById(contractId);
+
+        return new ResponseEntity<>("Successfully Deleted!", HttpStatus.OK);
     }
 
     /*

@@ -17,11 +17,10 @@ public interface AcaraOkkService {
     void deleteSponsorById(Long sponsorId);
     List<Contract> findAllContract();
     Contract findContractById(Long contractId);
-    List<Contract> findContractByAcaraOkk(AcaraOkk acaraOkk);
-    List<Contract> findContractBySponsor(Sponsor sponsor);
     Contract saveContract(AcaraOkk acaraOkk, Sponsor sponsor, Contract contract);
     void deleteContractById(Long contractId);
     List<PaketSponsor> findAllPaketSponsor();
+    PaketSponsor findPaketSponsorById(Long paketSponsorId);
     PaketSponsor findPaketSponsorByType(String type);
     PaketSponsor savePaketSponsor(PaketSponsor paketSponsor);
     List<Pembicara> findAllPembicara();
