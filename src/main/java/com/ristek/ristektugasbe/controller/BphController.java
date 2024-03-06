@@ -152,9 +152,17 @@ public class BphController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        rapat.setTempat(body.get("tempat"));
-        rapat.setWaktu(Timestamp.valueOf(body.get("waktu")));
-        rapat.setKesimpulan(body.get("kesimpulan"));
+        if (body.get("kesimpulan") != null) {
+            rapat.setKesimpulan(body.get("kesimpulan"));
+        }
+        if (body.get("waktu") != null) {
+            try {
+                rapat.setWaktu(Timestamp.valueOf(body.get("waktu")));
+            } catch (Exception ignored) {}
+        }
+        if (body.get("tempat") != null) {
+            rapat.setTempat(body.get("tempat"));
+        }
 
         return new ResponseEntity<>(
                 bphDTOMapper.convertToDto(bphService.saveRapat(bphId, rapat)),
@@ -330,9 +338,15 @@ public class BphController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        staff.setNama(body.get("nama"));
-        staff.setFakultas(body.get("fakultas"));
-        staff.setJurusan(body.get("jurusan"));
+        if (body.get("nama") != null) {
+            staff.setNama(body.get("nama"));
+        }
+        if (body.get("fakultas") != null) {
+            staff.setFakultas(body.get("fakultas"));
+        }
+        if (body.get("jurusan") != null) {
+            staff.setJurusan(body.get("jurusan"));
+        }
 
         try {
             staff.setAngkatan(Integer.parseInt(body.get("jalurMasuk")));

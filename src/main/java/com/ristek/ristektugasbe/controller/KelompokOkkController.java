@@ -76,7 +76,7 @@ public class KelompokOkkController {
     }
 
     @PatchMapping("/{kelompokId}")
-    public ResponseEntity<KelompokOkkDTORes> editNomorKelompokOkk(
+    public ResponseEntity<KelompokOkkDTORes> editKelompokOkk(
             @PathVariable("kelompokId") Long kelompokId,
             @RequestBody HashMap<String, String> body
             ) {
@@ -86,7 +86,9 @@ public class KelompokOkkController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        kelompokOkk.setNomor(body.get("nomor"));
+        if (body.get("nomor") != null) {
+            kelompokOkk.setNomor(body.get("nomor"));
+        }
 
         return new ResponseEntity<>(
                 kelompokOkkDTOMapper.convertToDto(kelompokOkkService.saveKelompokOkk(kelompokOkk)),
@@ -200,9 +202,17 @@ public class KelompokOkkController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        mentoring.setTempat(body.get("tempat"));
-        mentoring.setWaktu(Timestamp.valueOf(body.get("waktu")));
-        mentoring.setMateri(body.get("materi"));
+        if (body.get("materi") != null) {
+            mentoring.setMateri(body.get("materi"));
+        }
+        if (body.get("waktu") != null) {
+            try {
+                mentoring.setWaktu(Timestamp.valueOf(body.get("waktu")));
+            } catch (Exception ignored) {}
+        }
+        if (body.get("tempat") != null) {
+            mentoring.setTempat(body.get("tempat"));
+        }
 
         return new ResponseEntity<>(
                 kelompokOkkDTOMapper.convertToDto(kelompokOkkService.saveMentoring(kelompokId, mentoring)),
@@ -414,8 +424,12 @@ public class KelompokOkkController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        mentee.setNama(body.get("nama"));
-        mentee.setJalurMasuk(body.get("jalurMasuk"));
+        if (body.get("nama") != null) {
+            mentee.setNama(body.get("nama"));
+        }
+        if (body.get("jalurMasuk") != null) {
+            mentee.setJalurMasuk(body.get("jalurMasuk"));
+        }
 
         return new ResponseEntity<>(
                 kelompokOkkDTOMapper.convertToDto(kelompokOkkService.saveMentee(kelompokId, mentee)),

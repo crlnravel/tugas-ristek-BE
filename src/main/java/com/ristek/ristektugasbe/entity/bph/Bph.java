@@ -19,7 +19,7 @@ public class Bph {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nama")
+    @Column(name = "nama", unique = true)
     private String nama;
 
     @OneToMany(mappedBy = "bph")
